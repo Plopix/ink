@@ -163,7 +163,7 @@ export default class App extends PureComponent<Props, State> {
 		if (isEnabled) {
 			// Ensure raw mode is enabled only once
 			if (this.rawModeEnabledCount === 0) {
-				stdin.ref();
+				if (stdin.ref) stdin.ref();
 				stdin.setRawMode(true);
 				stdin.addListener('readable', this.handleReadable);
 			}
@@ -176,7 +176,7 @@ export default class App extends PureComponent<Props, State> {
 		if (--this.rawModeEnabledCount === 0) {
 			stdin.setRawMode(false);
 			stdin.removeListener('readable', this.handleReadable);
-			stdin.unref();
+			if (stdin.unref) stdin.unref();
 		}
 	};
 
